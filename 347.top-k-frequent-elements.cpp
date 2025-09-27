@@ -28,12 +28,3 @@ public:
         return res;
     }
 };
-
-int main()
-{
-    Solution s;
-    vector<int> inp = {1, 1, 1, 1, 2, 2, 3, 4};
-    cout << "Random shit:" << endl;
-    vector<int> res = s.topKFrequent(inp, 2);
-    cout << "topKFrequent " << res[0] << " and " << res[1] << endl;
-}
