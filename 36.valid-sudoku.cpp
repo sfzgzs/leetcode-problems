@@ -14,19 +14,11 @@ public:
     }
     bool isValidSudoku(vector<vector<char>> &board)
     {
-        vector<unordered_set<char>> row;
-        vector<unordered_set<char>> col;
-        vector<unordered_set<char>> squares;
-        for (int i = 0; i < 9; i++)
-        {
-            row.push_back(unordered_set<char>());
-            col.push_back(unordered_set<char>());
-            squares.push_back(unordered_set<char>());
-        }
+        vector<unordered_set<char>> row(9, unordered_set<char>());
+        vector<unordered_set<char>> col(9, unordered_set<char>());
+        vector<unordered_set<char>> squares(9, unordered_set<char>());
 
         for (int i = 0; i < 9; i++)
-        {
-
             for (int j = 0; j < 9; j++)
             {
                 if ((board[i])[j] != '.')
@@ -47,7 +39,6 @@ public:
                         return false;
                 }
             }
-        }
         return true;
     }
 };
