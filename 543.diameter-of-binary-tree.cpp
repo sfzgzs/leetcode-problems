@@ -15,21 +15,24 @@ struct TreeNode
 class Solution
 {
 public:
-    int maxD;
-    int maxDepth(TreeNode *root)
+    // returns <maxdepth,maxdiam>
+    pair<int, int> diamHelper(TreeNode *root)
     {
         if (root == nullptr)
-            return 0;
-        return max(maxDepth(root->left), maxDepth(root->right)) + 1;
+            return pair<int, int>(0, 0);
+        pair<int, int> helperRight = diamHelper(root->right);
+        pair<int, int> helperLeft = diamHelper(root->left);
+        int maxDiam = max(helperRight.second, helperLeft.second);
+        int tmpdepth = helperRight.first + helperLeft.first;
+        pair<int, int> p;
+        p.second = max(maxDiam, tmpdepth);
+        p.first = max(helperLeft.first, helperRight.first) + 1;
+        cout << "root " << root->val << " max depth " << p.first << "diam " << p.second << endl;
+        return p;
     }
     int diameterOfBinaryTree(TreeNode *root)
     {
-        maxD = 0;
-        int tmp = maxDepth(root->left) + maxDepth(root->right);
-
-        if (tmp > maxD)
-            maxD = tmp;
-        return tmp;
+        return diamHelper(root).second;
     }
 };
 
