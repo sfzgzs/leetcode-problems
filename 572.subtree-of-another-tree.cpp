@@ -49,7 +49,7 @@ int main()
     root2->left->left = new TreeNode(4);
     root2->left->right = new TreeNode(5);
 
-    int result = s.isSameTree(root1, root2);
+    int result = s.isSubtree(root1, root2);
 
     cout << result << endl;
 
