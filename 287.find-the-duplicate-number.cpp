@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-// Used Floy's alg
+// Used Floyd's alg
 using namespace std;
 
 class Solution
