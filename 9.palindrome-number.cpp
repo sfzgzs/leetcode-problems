@@ -17,4 +17,25 @@ public:
         }
         return true;
     }
+    bool isPalindromeStack(int x)
+    {
+        if (x < 0)
+            return false;
+        stack<int> st;
+        int rem = x;
+        while (rem != 0)
+        {
+            st.push(rem % 10);
+            rem /= 10;
+        }
+        rem = x;
+        while (!st.empty())
+        {
+            if (st.top() != rem % 10)
+                return false;
+            rem /= 10;
+            st.pop();
+        }
+        return true;
+    }
 };
