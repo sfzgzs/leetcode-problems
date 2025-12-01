@@ -10,23 +10,30 @@ class Solution
 public:
     int findMin(vector<int> &nums)
     {
-        if (nums.size() == 1)
-            return nums[0];
-        if (nums.size() == 2)
-            return min(nums[0], nums[1]);
-
-        vector<int> l(nums.begin(), nums.begin() + nums.size() / 2);
-        int left = findMin(l);
-        vector<int> r(nums.begin() + nums.size() - (nums.size() / 2) - 1, nums.end());
-
-        int right = findMin(r);
-        return min(left, right);
+        int res = nums[0];
+        int l = 0;
+        int r = nums.size() - 1;
+        while (l <= r)
+        {
+            if (nums[l] < nums[r])
+            {
+                res = min(res, nums[l]);
+                break;
+            }
+            int mid = (l + r) / 2;
+            res = min(res, nums[mid]);
+            if (nums[mid] >= nums[l])
+                l = m + 1;
+            else
+                r = mid - 1;
+        }
+        return res;
     }
 };
 int main()
 {
     Solution s;
-    vector<int> nums = {3, 2};
+    vector<int> nums = {3, 4, 5, 1, 2};
     auto res = s.findMin(nums);
     cout << res << endl;
 }
