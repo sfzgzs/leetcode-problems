@@ -8,31 +8,19 @@ using namespace std;
 class Solution
 {
 public:
-    bool isRemovalFine(char c, unordered_map<char, int> &currmap, unordered_map<char, int> &tmap)
-    {
-        cout << "Testing is Removal: char " << c << " found?" << (tmap.find(c) == tmap.end()) << " orrr " << (tmap[c] < currmap[c]) << "\n";
-        return (tmap.find(c) == tmap.end()) || (tmap[c] < currmap[c]);
-    }
-    bool matching(unordered_map<char, int> &currmap, unordered_map<char, int> &tmap)
-    {
-        for (auto pair : tmap)
-        {
-            if (currmap[pair.first] < pair.second)
-            {
-                cout << "looking for " << pair.first << " ... not found\n";
-                return false;
-            }
-        }
-        return true;
-    }
+    int need = 0;
+    int have = 0;
     string minWindow(string s, string t)
     {
+        if (t == "" || t.size() > s.size())
+            return "";
         string result = "";
         bool resultFound = false;
 
         unordered_map<char, int> tmap;
         for (char c : t)
             tmap[c]++;
+        need = tmap.size();
 
         unordered_map<char, int> currmap;
 
@@ -40,32 +28,40 @@ public:
 
         for (int endptr = 0; endptr < s.size(); endptr++)
         {
+            cout << "in for \n";
             char c = s[endptr];
             currmap[c]++;
-
+            if (tmap.find(c) == tmap.end())
+                continue;
             cout << "In loop, char=" << c << ", startptr=" << startptr << ", endptr=" << endptr << "\n";
-
-            // If current window contains all needed chars, try shrinking
-            while (matching(currmap, tmap) && isRemovalFine(s[startptr], currmap, tmap))
+            if (currmap[c] == tmap[c])
+                have += 1;
+            while (have == need)
             {
-                cout << "Shrinking: removing " << s[startptr] << "\n";
-                currmap[s[startptr]]--;
-                startptr++;
-            }
-
-            // After shrinking, if window is valid → update result
-            if (matching(currmap, tmap))
-            {
+                // update result
                 string currResult = s.substr(startptr, endptr - startptr + 1);
+                cout << "in have == need current res" << currResult << "\n";
                 if (!resultFound || currResult.size() < result.size())
                 {
+                    cout << "update result\n";
                     result = currResult;
                     resultFound = true;
                 }
+                // pop from left
+                char beginc = s[startptr];
+                if (tmap.find(beginc) != tmap.end())
+                {
+                    cout << "removing " << beginc << "\n";
+                    currmap[beginc]--;
+                }
+                if (currmap[beginc] < tmap[beginc])
+                    have--;
+                startptr++;
             }
         }
-
-        return result;
+        if (resultFound)
+            return result;
+        return "";
     }
 };
 int main()
