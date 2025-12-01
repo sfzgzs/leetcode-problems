@@ -10,6 +10,8 @@ class Solution
 public:
     int need = 0;
     int have = 0;
+    int minResStartIndex = 0;
+    int minResEndIndex = 0;
     string minWindow(string s, string t)
     {
         if (t == "" || t.size() > s.size())
@@ -32,10 +34,10 @@ public:
                 have += 1;
             while (have == need)
             {
-                string currResult = s.substr(startptr, endptr - startptr + 1);
-                if (!resultFound || currResult.size() < result.size())
+                if (!resultFound || endptr - startptr < minResEndIndex - minResStartIndex)
                 {
-                    result = currResult;
+                    minResEndIndex = endptr;
+                    minResStartIndex = startptr;
                     resultFound = true;
                 }
                 char beginc = s[startptr];
@@ -49,7 +51,8 @@ public:
             }
         }
         if (resultFound)
-            return result;
+            return s.substr(minResStartIndex, minResEndIndex - minResStartIndex + 1);
+        ;
         return "";
     }
 };
