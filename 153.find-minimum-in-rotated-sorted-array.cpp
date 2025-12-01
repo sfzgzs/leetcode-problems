@@ -23,7 +23,7 @@ public:
             int mid = (l + r) / 2;
             res = min(res, nums[mid]);
             if (nums[mid] >= nums[l])
-                l = m + 1;
+                l = mid + 1;
             else
                 r = mid - 1;
         }
