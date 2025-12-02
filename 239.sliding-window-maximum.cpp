@@ -12,7 +12,7 @@ void printvector(vector<int> st, string str = "")
         cout << st[i] << " ";
     cout << endl;
 }
-void printvector(deque<int> st)
+void printdeque(deque<int> st)
 {
     for (int i = 0; i < st.size(); i++)
         cout << st[i] << " ";
