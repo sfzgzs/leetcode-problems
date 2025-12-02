@@ -34,7 +34,7 @@ public:
                 maxs.pop_back();
             }
             maxs.push_back(i);
-            printvector(maxs);
+            printdeque(maxs);
         }
         res.push_back(nums[maxs.front()]);
         for (int i = k; i < nums.size(); i++)
