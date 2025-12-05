@@ -36,7 +36,7 @@ public:
     }
 };
 
-void printvector(vector<int> st)
+void printvector(const vector<int> &st)
 {
     for (int i = 0; i < st.size(); i++)
         cout << st[i] << " ";

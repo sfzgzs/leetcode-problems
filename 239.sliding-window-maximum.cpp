@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void printvector(vector<int> st, string str = "")
+void printvector(const vector<int> &st, string str = "")
 {
     if (str != "")
         cout << str << "\n";
