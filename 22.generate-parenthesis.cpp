@@ -37,12 +37,6 @@ public:
     }
 };
 
-// void printvector(const vector<int> &st)
-// {
-//     for (int i = 0; i < st.size(); i++)
-//         cout << st[i] << " ";
-//     cout << endl;
-// }
 int main()
 {
     Solution s;
