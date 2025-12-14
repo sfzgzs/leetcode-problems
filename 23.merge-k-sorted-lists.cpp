@@ -29,51 +29,65 @@ void printvector(const vector<ListNode *> &v)
         cout << v[i]->val << " ";
     cout << endl;
 }
+void myinsertsort(vector<ListNode *> &list, ListNode *toinsert)
+{
+    int begin = 0;
+    int end = list.size();
+
+    while (begin < end)
+    {
+        int mid = begin + (end - begin) / 2;
+
+        if (toinsert->val >= list[mid]->val)
+            end = mid;
+        else
+            begin = mid + 1;
+    }
+
+    list.insert(list.begin() + begin, toinsert);
+}
 class Solution
 {
 public:
     ListNode *mergeKLists(vector<ListNode *> &lists)
     {
-        if (lists.size() == 0)
-            return nullptr;
         vector<ListNode *> heads;
         for (auto l : lists)
-        {
-            if (l != nullptr)
-            {
+            if (l)
                 heads.push_back(l);
-            }
-        }
+
         if (heads.empty())
             return nullptr;
-        sort(heads.begin(), heads.end(), [](ListNode *a, ListNode *b)
+
+        sort(heads.begin(), heads.end(),
+             [](ListNode *a, ListNode *b)
              { return a->val > b->val; });
 
-        ListNode *newhead = new ListNode(heads[heads.size() - 1]->val);
-        ListNode *tmpnext = heads[heads.size() - 1]->next;
+        ListNode *newhead = heads.back();
         heads.pop_back();
-        if (tmpnext != nullptr)
-            heads.push_back(tmpnext);
+
+        ListNode *tmp = newhead->next;
+        newhead->next = nullptr;
+        if (tmp)
+            myinsertsort(heads, tmp);
+
         ListNode *mainitr = newhead;
 
         while (!heads.empty())
         {
-            sort(heads.begin(), heads.end(), [](ListNode *a, ListNode *b)
-                 { return a->val > b->val; });
-            // printvector(heads);
-            ListNode *last = heads[heads.size() - 1];
-            ListNode *tmp = last->next;
-            mainitr->next = last;
-            // printList(newhead);
-
+            ListNode *last = heads.back();
             heads.pop_back();
-            if (tmp != nullptr)
-            {
-                heads.push_back(tmp);
-            }
-            mainitr = mainitr->next;
-            // break;
+
+            tmp = last->next;
+            last->next = nullptr;
+
+            mainitr->next = last;
+            mainitr = last;
+
+            if (tmp)
+                myinsertsort(heads, tmp);
         }
+
         return newhead;
     }
 };
