@@ -61,14 +61,42 @@ public:
 
         return mem[key] = best;
     }
+    int earn_dp(map<int, int> &repitions)
+    {
+        vector<pair<int, int>> keyRepetitions(repitions.begin(), repitions.end());
 
+        int keyRepetitionssize = keyRepetitions.size();
+        vector<int> dp(keyRepetitionssize, 0);
+
+        dp[0] = keyRepetitions[0].first * keyRepetitions[0].second; // how much we would gaing by picking 0th elem
+
+        for (int i = 1; i < keyRepetitionssize; i++)
+        {
+            int gain = keyRepetitions[i].first * keyRepetitions[i].second; // gain by selecting elem i
+
+            if (keyRepetitions[i].first == keyRepetitions[i - 1].first + 1) // in case (key = last key - 1) ignore it
+            {
+                int take = gain;
+                if (i > 1) // also check the left side
+                    take += dp[i - 2];
+
+                dp[i] = max(dp[i - 1], take); // figure out if taking i-1 is better, or taking (i and i-2) together
+            }
+            else
+            {
+                dp[i] = dp[i - 1] + gain; // keys are not neighbors, so it's fine
+            }
+        }
+
+        return dp[keyRepetitionssize - 1];
+    }
     int deleteAndEarn(vector<int> &nums)
     {
         map<int, int> repitions;
         for (int num : nums)
             repitions[num]++;
 
-        return earn_no_dp(nums);
+        return earn_dp(repitions);
     }
 };
 int main()
