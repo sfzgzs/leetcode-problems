@@ -30,6 +30,24 @@ public:
                 return i;
         return -1;
     }
+    int less_dumb_pivotIndex(vector<int> &nums)
+    {
+        int total = 0;
+        int leftsofar = 0;
+
+        for (int x : nums)
+            total += x;
+
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (leftsofar == total - leftsofar - nums[i])
+                return i;
+
+            leftsofar += nums[i];
+        }
+
+        return -1;
+    }
 };
 int main()
 {
