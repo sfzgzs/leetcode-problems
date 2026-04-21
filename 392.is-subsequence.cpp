@@ -13,7 +13,7 @@ using namespace std;
 class Solution
 {
 public:
-    bool isSubsequence(string s, string t)
+    bool isSubsequence_map(string s, string t)
     {
         unordered_map<char, queue<int>> indices; // a map of char to indices
         for (int i = 0; i < t.size(); i++)
@@ -44,12 +44,37 @@ public:
         }
         return true;
     }
+    bool isSubsequence_two_pointers(string s, string t)
+    {
+        if (s.size() > t.size())
+            return false;
+        if (s.size() == 0)
+            return true;
+        int pt = 0;
+        for (int is = 0; is < s.size(); is++)
+        {
+            bool found = false;
+            for (int it = pt; it < t.size(); it++)
+            {
+                if (t[it] == s[is])
+                {
+                    found = true;
+                    pt = it;
+                    break;
+                }
+            }
+            if (!found)
+                return false;
+        }
+        return true;
+    }
 };
+
 int main()
 {
     Solution s;
-    string s1 = "ab";
-    string s2 = "baab";
-    auto res = s.isSubsequence(s1, s2);
+    string s1 = "acb";
+    string s2 = "ahbgdc";
+    auto res = s.isSubsequence_two_pointers(s1, s2);
     cout << res << endl;
 }
