@@ -59,7 +59,7 @@ public:
                 if (t[it] == s[is])
                 {
                     found = true;
-                    pt = it;
+                    pt = it + 1;
                     break;
                 }
             }
