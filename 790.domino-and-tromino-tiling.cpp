@@ -13,7 +13,7 @@ public:
             return 5;
 
         long n1 = 1, n2 = 2, n3 = 5;
-
+        // f(n) = 2*f(n-1) + f(n-3)
         for (int i = 4; i <= n; i++)
         {
             long tmp = (2 * n3 + n1) % MOD;
